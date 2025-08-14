@@ -1,0 +1,177 @@
+@model AssinaturaDigital.Models.Signature
+
+<div data-controller="step" data-step-status="@Model.Status" class="flex items-center justify-center min-h-screen p-4">
+  <div class="w-full mt-5 max-w-xl p-5 bg-white border border-gray-200 rounded-lg shadow-xs">
+
+    <!-- Stepper visual -->
+    <ol id="stepper" class="flex items-center justify-center gap-x-6 mb-6 font-normal text-gray-500">
+      <li class="flex items-center">
+        <div id="step-item-1" class="flex items-center gap-3">
+          <span id="step-bullet-1" data-step-target="bullet1" class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white">1</span>
+        </div>
+        <div class="w-24 h-0.5 bg-gray-200 ml-3"></div>
+      </li>
+      <li class="flex items-center">
+        <div id="step-item-2" class="flex items-center gap-3">
+          <span id="step-bullet-2" data-step-target="bullet2" class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-500">2</span>
+        </div>
+        <div class="w-24 h-0.5 bg-gray-200 ml-3"></div>
+      </li>
+      <li class="flex items-center">
+        <div id="step-item-3" class="flex items-center gap-3">
+          <span id="step-bullet-3" data-step-target="bullet3" class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-500">3</span>
+        </div>
+      </li>
+    </ol>
+
+    <!-- Step 1: Attest -->
+    <div id="step-1" data-step-target="step1" class="space-y-4">
+      <div class="relative mb-10">
+        <input type="text" value="@Model.Attest.System" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+        <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Sistema</label>
+      </div>
+
+      <div class="relative mb-10">
+        <input type="text" value="@Model.Attest.Entity" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+        <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Entidade</label>
+      </div>
+
+      <div class="relative mb-10">
+        <input type="text" value="@Model.Attest.Operation" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+        <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Operação</label>
+      </div>
+
+      <div class="relative mb-10">
+        <textarea readonly rows="4" class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 resize-none focus:border-blue-600 peer">@Model.Attest.Message</textarea>
+        <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Observação</label>
+      </div>
+
+      <div class="flex justify-end">
+        <button type="button" id="btn-next-1" class="w-1/2 text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-5 py-2.5">Próximo</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Signature -->
+    <div id="step-2" data-step-target="step2" class="hidden space-y-4">
+        <div class="relative mb-10">
+          <input type="text" value="@Model.Title" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+          <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Título</label>
+        </div>
+
+        <div class="relative mb-10">
+          <input type="text" value="@Model.Name" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+          <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Nome</label>
+        </div>
+
+        <div class="relative mb-10">
+          <input type="text" value="@Model.Cpf" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+          <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">CPF</label>
+        </div>
+
+        <div class="relative mb-10">
+          <input type="email" value="@Model.Email" readonly class="block px-2.5 pb-2.5 pt-4 w-full text-gray-900 bg-transparent rounded-lg border border-gray-300 focus:border-blue-600 peer"/>
+          <label class="absolute text-gray-400 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2">Email</label>
+        </div>
+
+        <div class="flex gap-4">
+          <button type="button" id="btn-back-2" class="w-1/2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg px-5 py-2.5">Voltar</button>
+          <button type="button" data-modal-target="confirm-modal" data-modal-toggle="confirm-modal" id="btn-open-confirm" class="w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-normal px-5 py-2.5">Assinar</button>
+        </div>
+    </div>
+
+    <!-- Step 3: Confirmação -->
+    <div id="step-3" data-step-target="step3" class="hidden flex flex-col items-center justify-center space-y-4 text-center">
+      <lottie-player 
+            src="https://assets3.lottiefiles.com/packages/lf20_jbrw3hcz.json" 
+            background="transparent" 
+            speed="1" 
+            style="width: 500px; height: 500px;" 
+            autoplay>
+        </lottie-player>
+
+        <p>Assinado em @Model.SignedAt</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmação -->
+<div id="confirm-modal" tabindex="-1" aria-hidden="true"
+     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Confirmar Assinatura</h3>
+    <p class="text-gray-700 mb-6">Você tem certeza que deseja confirmar a assinatura?</p>
+
+    <div class="flex justify-end gap-4">
+      <!-- Botão de cancelar -->
+      <button type="button" data-modal-toggle="confirm-modal"
+              class="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 text-gray-700">
+        Cancelar
+      </button>
+
+      <!-- Form para confirmar -->
+      <form method="post" asp-action="EditStatus" asp-route-id="@Model.Id">
+        <input type="hidden" name="status" value="CONFIRMADO" />
+        <button type="submit"
+                class="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white">
+          Confirmar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+@section Scripts {
+<script>
+  const step1 = document.getElementById('step-1');
+  const step2 = document.getElementById('step-2');
+  const step3 = document.getElementById('step-3');
+
+  const bullet1 = document.getElementById('step-bullet-1');
+  const bullet2 = document.getElementById('step-bullet-2');
+  const bullet3 = document.getElementById('step-bullet-3');
+
+  // Função para ir para o Step 3
+  function goToStep3() {
+    step1.classList.add('hidden');
+    step2.classList.add('hidden');
+    step3.classList.remove('hidden');
+
+    bullet1.classList.remove('bg-blue-600','text-white');
+    bullet1.classList.add('bg-gray-200','text-gray-500');
+
+    bullet2.classList.remove('bg-blue-600','text-white');
+    bullet2.classList.add('bg-gray-200','text-gray-500');
+
+    bullet3.classList.remove('bg-gray-200','text-gray-500');
+    bullet3.classList.add('bg-blue-600','text-white');
+  }
+
+  // Se a assinatura já estiver confirmada, abrir direto no Step 3
+  const signatureStatus = '@Model.Status';
+  if(signatureStatus === 'CONFIRMADO') {
+    goToStep3();
+  }
+
+  // Navegação normal
+  document.getElementById('btn-next-1').addEventListener('click', () => {
+    step1.classList.add('hidden');
+    step2.classList.remove('hidden');
+    bullet1.classList.remove('bg-blue-600','text-white');
+    bullet1.classList.add('bg-gray-200','text-gray-500');
+    bullet2.classList.remove('bg-gray-200','text-gray-500');
+    bullet2.classList.add('bg-blue-600','text-white');
+  });
+
+  document.getElementById('btn-back-2').addEventListener('click', () => {
+    step2.classList.add('hidden');
+    step1.classList.remove('hidden');
+    bullet2.classList.remove('bg-blue-600','text-white');
+    bullet2.classList.add('bg-gray-200','text-gray-500');
+    bullet1.classList.remove('bg-gray-200','text-gray-500');
+    bullet1.classList.add('bg-blue-600','text-white');
+  });
+
+</script>
+}

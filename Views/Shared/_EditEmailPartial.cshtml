@@ -1,0 +1,38 @@
+@model AssinaturaDigital.Models.Signature
+
+<form asp-action="EditEmail" asp-controller="Signatures" asp-route-id="@Model.Id" method="post">
+
+    <p class="text-normal font-normal text-gray-500 dark:text-gray-300 mb-4">
+        Alterando Email de @Model.Name
+    </p>
+
+    <div class="mb-5">
+        <div class="relative">
+            <input 
+                type="email" 
+                name="email" 
+                id="email-address-icon" 
+                placeholder=" " 
+                required 
+                value="@Model.Email"
+                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" />
+            
+            <label for="email-address-icon"
+                class="absolute text-normal text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-700 px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">
+                Email
+            </label>
+        </div>
+    </div>
+
+    <div class="flex space-x-3">
+        <button type="submit"
+            class="py-2.5 px-5 me-2 mb-2 text-normal font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            Salvar e reenviar email
+        </button>
+
+        <a asp-action="ManageAttest" asp-controller="Attests"asp-route-token="@Model.Attest!.Token"
+            class="py-2.5 px-5 me-2 mb-2 text-normal font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            Cancelar
+        </a>
+    </div>
+</form>
