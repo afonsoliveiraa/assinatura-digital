@@ -21,7 +21,7 @@ namespace AssinaturaDigital.Controllers.Api
 
         // POST: api/attestsApi
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Attest attest)
+        public async Task<IActionResult> CreateAttestSignatures([FromBody] Attest attest)
         {
             if (attest == null)
             {
@@ -33,18 +33,18 @@ namespace AssinaturaDigital.Controllers.Api
             }
 
             if (!ModelState.IsValid)
-                {
-                    var firstError = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                        .FirstOrDefault() ?? "Dados inválidos";
+            {
+                var firstError = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .FirstOrDefault() ?? "Dados inválidos";
 
-                    return Ok(new
-                    {
-                        status = false,
-                        token = firstError
-                    });
-                }
+                return Ok(new
+                {
+                    status = false,
+                    token = firstError
+                });
+            }
 
 
             // Salva o Attest e suas Signatures em cascata
@@ -83,7 +83,6 @@ namespace AssinaturaDigital.Controllers.Api
                 token = attest.Token
             });
         }
-
 
         [HttpGet("{token}")]
         public async Task<IActionResult> GetAttestSignatures(string token)
@@ -125,8 +124,6 @@ namespace AssinaturaDigital.Controllers.Api
                 signatures = signaturesStatus
             });
         }
-
-
 
     }
 }

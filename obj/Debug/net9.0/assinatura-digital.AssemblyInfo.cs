@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("assinatura-digital")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+604971ecb666ce597b1ac8f68d27c2059096841b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21d7c0ebca25e1bd416b84c4b1e41ab506c4c6ef")]
 [assembly: System.Reflection.AssemblyProductAttribute("assinatura-digital")]
 [assembly: System.Reflection.AssemblyTitleAttribute("assinatura-digital")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
