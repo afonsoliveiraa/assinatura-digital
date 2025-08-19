@@ -1,42 +1,84 @@
 using AssinaturaDigital.Data;
-using Microsoft.EntityFrameworkCore;
+using AssinaturaDigital.Models;
 using AssinaturaDigital.Services;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ----------------------
 // Configurar PostgreSQL
+// ----------------------
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add services to the container.
+// ----------------------
+// Configurar Identity (.NET 9)
+// ----------------------
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true; // exige confirmação de email
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders(); // necessário para reset de senha, email confirmation etc.
+
+// ----------------------
+// Configurar cookies
+// ----------------------
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
+// ----------------------
+// Serviços customizados
+// ----------------------
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddSingleton<PdfService>();
+builder.Services.AddTransient<IEmailSender, IdentityEmailSender>();
 
-// Add controllers
+// ----------------------
+// Controllers, Views e Razor Pages
+// ----------------------
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages(options =>
+{
+    // Rota alternativa para /Dashboard/Register
+    options.Conventions.AddAreaPageRoute(
+        areaName: "Identity",
+        pageName: "/Account/Register",
+        route: "/Dashboard/Register"
+    );
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ----------------------
+// Middleware
+// ----------------------
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthentication(); // Identity
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
+// ----------------------
+// Rotas
+// ----------------------
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages(); // Necessário para páginas do Identity
 
 app.Run();

@@ -1,14 +1,15 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // necessário para IdentityDbContext
 using Microsoft.EntityFrameworkCore;
-using AssinaturaDigital.Models; // <-- necessário para encontrar as models
-
+using AssinaturaDigital.Models; // para encontrar ApplicationUser, Attest e Signature
 
 namespace AssinaturaDigital.Data
 {
-    public class AppDbContext : DbContext
+    // Herdando de IdentityDbContext<ApplicationUser> para suportar Identity
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        // Adicione seus DbSets aqui
+        // Suas tabelas existentes
         public DbSet<Attest> Attests { get; set; }
         public DbSet<Signature> Signatures { get; set; }
     }

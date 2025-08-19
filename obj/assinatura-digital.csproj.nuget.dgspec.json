@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Profissional\\assinatura-digital\\assinatura-digital.csproj": {}
+    "C:\\Users\\Profissional\\new-life\\assinatura-digital\\assinatura-digital.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Profissional\\assinatura-digital\\assinatura-digital.csproj": {
+    "C:\\Users\\Profissional\\new-life\\assinatura-digital\\assinatura-digital.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Profissional\\assinatura-digital\\assinatura-digital.csproj",
+        "projectUniqueName": "C:\\Users\\Profissional\\new-life\\assinatura-digital\\assinatura-digital.csproj",
         "projectName": "assinatura-digital",
-        "projectPath": "C:\\Users\\Profissional\\assinatura-digital\\assinatura-digital.csproj",
+        "projectPath": "C:\\Users\\Profissional\\new-life\\assinatura-digital\\assinatura-digital.csproj",
         "packagesPath": "C:\\Users\\Profissional\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Profissional\\assinatura-digital\\obj\\",
+        "outputPath": "C:\\Users\\Profissional\\new-life\\assinatura-digital\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Profissional\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -51,6 +51,14 @@
             "MailKit": {
               "target": "Package",
               "version": "[4.13.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[9.0.8, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
